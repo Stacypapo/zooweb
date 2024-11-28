@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'main/css/main.css'%}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="upperbox">
+  <a  class="home" href="/home"><img src="{% static 'main/img/home.png' %}" style="vertical-align: middle; margin-bottom: 3px" />PAPOMARKET</a>
+  <a href="/create"><img src="{% static 'main/img/create.png' %}" style="vertical-align: middle; margin-bottom: 3px" />CREATE</a>
+</div>
+{% block content %}
+{% endblock %}
+<div class="lowerbox">
+  <p>&copy; PAPOMARKET. Все права защищены.</p>
+</div>
+
+</body>
+<script src="{% static 'main/js/scripts.js' %}"></script>
+</html>

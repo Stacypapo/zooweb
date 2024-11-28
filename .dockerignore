@@ -1,0 +1,10 @@
+# Игнорируем папки и файлы
+.git
+node_modules
+dist
+tmp
+*.log
+.env
+uploads
+debug
+*.tmp

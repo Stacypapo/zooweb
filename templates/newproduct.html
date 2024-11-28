@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="static/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="upperbox">
+  <a  class="home" href="/home"><img src="{% static 'main/img/home.png' %}" style="vertical-align: middle; margin-bottom: 3px" />PAPOMARKET</a>
+  <a href="/create"><img src="{% static 'main/img/create.png' %}" style="vertical-align: middle; margin-bottom: 3px" />CREATE</a>
+</div>
+
+<div class="form-container">
+  <h1>Create New Product</h1>
+
+  {{ if .error }}
+  <p style="color: #ff0000;">{{ .error }}</p>
+  {{ end }}
+
+  <form action="/newproduct" method="POST" class="new-product-form" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="name">Product Name:</label>
+      <input class="form-control" type="text" id="name" name="name" required><br><br>
+
+      <label for="description">Description:</label>
+      <textarea class="form-control" id="description" name="description"></textarea><br><br>
+
+      <label for="stock">Stock</label>
+      <input class="form-control" type="number" id="stock" name="stock" required><br><br>
+
+      <label for="price">Price:</label>
+      <input class="form-control" type="number" id="price" name="price" step="0.01" required><br><br>
+
+      <label for="image">Product Image:</label>
+      <input type="file" id="image" name="image" accept="image/*" required><br><br>
+
+      <button class="btn btn-success" type="submit">Create Product</button>
+    </div>
+  </form>
+</div>
+
+<a href="/home">Back to Products</a>
+<div class="lowerbox">
+  <p>&copy; PAPOMARKET. Все права защищены.</p>
+</div>
+</body>
+</html>
