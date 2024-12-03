@@ -15,16 +15,28 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	{
 		authGroup.GET("/profile", func(c *gin.Context) {
 			controllers.Getprofile(c, db)
-
 		})
-	}
 
-	r.POST("/logout", func(c *gin.Context) {
-		controllers.Logout(c)
-	})
+		authGroup.POST("/cart/add", func(c *gin.Context) {
+			controllers.AddToCart(c, db)
+		})
+
+		authGroup.GET("/cart", func(c *gin.Context) {
+			controllers.ViewCart(c, db)
+		})
+
+		authGroup.POST("/cart/remove", func(c *gin.Context) {
+			controllers.RemoveFromCart(c, db)
+		})
+
+	}
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/static", "./static")
 
+	r.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "/home")
+	})
+	
 	r.GET("/home", func(c *gin.Context) {
 		controllers.GetProducts(c, db)
 	})
@@ -45,19 +57,23 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 		controllers.Login(c, db)
 	})
 
+	r.POST("/logout", func(c *gin.Context) {
+		controllers.Logout(c)
+	})
+
 	r.GET("/product/:slug", func(c *gin.Context) {
 		controllers.GetProduct(c, db)
 	})
+
 	r.POST("/newproduct", func(c *gin.Context) {
 		controllers.CreateProduct(c, db)
 	})
+
 	r.GET("/create", func(c *gin.Context) {
 		controllers.NewProduct(c)
 	})
+
 	r.POST("/decrease_stock/:id/:amount", func(c *gin.Context) {
 		controllers.DecreaseStock(c, db)
-	})
-	r.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/home")
 	})
 }

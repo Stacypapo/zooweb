@@ -8,5 +8,12 @@
 <p>Price: {{ .product.Price }} руб.</p>
 <p>Description: {{ .product.Description }}</p>
 <p>Stock: {{ .product.Stock }}</p>
+<form action="/user/cart/add" method="post">
+  <input type="hidden" name="product_id" value="{{.product.ID}}">
+  <label for="quantity">Количество:</label>
+  <input type="number" name="quantity" id="quantity" value="1" min="1">
+  <button type="submit">Добавить в корзину</button>
+</form>
+
 </body>
 </html>

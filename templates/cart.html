@@ -1,0 +1,22 @@
+<h1>Ваша корзина</h1>
+<table>
+  <tr>
+    <th>Название</th>
+    <th>Количество</th>
+    <th>Цена</th>
+    <th>Действия</th>
+  </tr>
+  {{range .cartItems}}
+  <tr>
+    <td>{{.Product.Name}}</td>
+    <td>{{.Quantity}}</td>
+    <td>{{.Product.Price}}</td>
+    <td>
+      <form action="/user/cart/remove" method="post">
+        <input type="hidden" name="cart_item_id" value="{{.ID}}">
+        <button type="submit">Удалить</button>
+      </form>
+    </td>
+  </tr>
+  {{end}}
+</table>

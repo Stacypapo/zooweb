@@ -23,6 +23,7 @@ func main() {
 	// Автоматическое создание таблицы
 	models.AutoMigrateProducts(db)
 	models.AutoMigrateUsers(db)
+	models.AutoMigrateCart(db)
 
 	// Инициализация Gin
 	r := gin.Default()
