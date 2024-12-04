@@ -93,3 +93,19 @@ func DecreaseStock(c *gin.Context, db *gorm.DB) {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": "Not enough stock"})
 	}
 }
+
+func SearchProducts(c *gin.Context, db *gorm.DB) {
+	query := c.Query("q") // Получаем поисковый запрос из параметров запроса
+
+	var products []models.Product
+	if query != "" {
+		// Ищем товары, которые содержат запрос в названии или описании
+		db.Where("name ILIKE ? OR description ILIKE ?", "%"+query+"%", "%"+query+"%").Find(&products)
+	}
+
+	// Отправляем результаты в шаблон
+	c.HTML(http.StatusOK, "search.html", gin.H{
+		"query":    query,
+		"products": products,
+	})
+}

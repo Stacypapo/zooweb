@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ .product.Name }}</title>
+  <title>Результаты поиска</title>
   <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
@@ -20,32 +20,18 @@
   <a href="/signup">регистрация</a>
 </div>
 
-<div class="product-container">
-  <h1>{{ .product.Name }}</h1>
-  <p class="price">{{ .product.Price }} руб.</p>
-  <p>{{ .product.Description }}</p>
-  <p>Количество на складе: {{ .product.Stock }}</p>
-  <form action="/user/cart/add" method="post">
-    <input type="hidden" name="product_id" value="{{.product.ID}}">
-    <label for="quantity">Количество:</label>
-    <input class="numberinput" type="number" name="quantity" id="quantity" value="1" min="1">
-    <button type="submit">Добавить в корзину</button>
-  </form>
-  <a href="javascript:history.back()"><button>Назад</button></a>
-</div>
-
-<div class="reviews">
-  <h2>Отзывы</h2>
-  {{if .reviews}}
+<div class="search-results">
+  <h1>Результаты поиска для "{{.query}}"</h1>
+  {{if .products}}
   <ul>
-    {{range .reviews}}
+    {{range .products}}
     <li>
-      <strong>{{.Author}}:</strong> {{.Text}} (Оценка: {{.Rating}})
+      <a href="/product/{{.Slug}}">{{.Name}}</a> - {{.Price}} руб.
     </li>
     {{end}}
   </ul>
   {{else}}
-  <p>Отзывов пока нет. Будьте первым, кто оставит отзыв!</p>
+  <p>Ничего не найдено. Попробуйте другой запрос или <a href="/home">вернитесь на главную</a>.</p>
   {{end}}
 </div>
 

@@ -46,8 +46,7 @@ func AddToCart(c *gin.Context, db *gorm.DB) {
 		}
 		db.Create(&cartItem)
 	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Товар добавлен в корзину"})
+	c.Redirect(301, c.Request.Referer())
 }
 
 // Просмотр корзины
@@ -73,5 +72,5 @@ func RemoveFromCart(c *gin.Context, db *gorm.DB) {
 	}
 
 	db.Delete(&models.CartItem{}, form.CartItemID)
-	c.JSON(http.StatusOK, gin.H{"message": "Товар удален из корзины"})
+	c.Redirect(301, "/user/cart")
 }

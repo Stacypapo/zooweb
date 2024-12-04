@@ -8,3 +8,4 @@ tmp
 uploads
 debug
 *.tmp
+qodana.yaml

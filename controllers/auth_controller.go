@@ -30,6 +30,11 @@ func Register(c *gin.Context, db *gorm.DB) {
 		Username string `form:"username" binding:"required"`
 		Password string `form:"password" binding:"required"`
 	}
+	
+	if c.PostForm("agree") != "on" {
+		c.HTML(http.StatusBadRequest, "signup.html", gin.H{"error": "Вы должны принять пользовательское соглашение"})
+		return
+	}
 
 	// Парсинг данных из формы
 	if err := c.ShouldBind(&form); err != nil {

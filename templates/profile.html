@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты поиска</title>
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-  <h3>{{ .user.ID }}</h3>
-  <h4>{{ .user.Username }}</h4>
-  <form action="/logout" method="post">
-      <button type="submit"> logout</button>
-  </form>
+<div class="upperbox">
+    <a class="home" href="/home"><img src="/static/img/home.png" />PAPOMARKET</a>
+    <a href="/create"><img src="/static/img/create.png" />CREATE</a>
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Искать товары...">
+        <button type="submit">Поиск</button>
+    </form>
+    <a href="/user/cart">корзина</a>
+    <a href="/user/profile">профиль</a>
+    <a href="/signin">вход</a>
+    <a href="/signup">регистрация</a>
+</div>
+
+<div class="profile-container">
+    <h1>Ваш профиль</h1>
+    <p>{{ .user.Username }}</p>
+    <p>email</p>
+    <a href="/user/edit"><button class="btn-success">Редактировать профиль</button></a>
+    <a href="/user/orders"><button class="btn-info">Мои заказы</button></a>
+    <form action="/logout" method="post">
+        <button class="btn-danger" type="submit"> logout</button>
+    </form>
+</div>
+
+<div class="lowerbox">
+    <footer>
+        <p>&copy; 2024 PAPOMARKET. Все права защищены.</p>
+        <a href="/terms">Пользовательское соглашение</a>
+    </footer>
+</div>
 </body>
 </html>

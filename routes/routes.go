@@ -36,9 +36,13 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	r.GET("/", func(c *gin.Context) {
 		c.Redirect(http.StatusMovedPermanently, "/home")
 	})
-	
+
 	r.GET("/home", func(c *gin.Context) {
 		controllers.GetProducts(c, db)
+	})
+
+	r.GET("/search", func(c *gin.Context) {
+		controllers.SearchProducts(c, db)
 	})
 
 	r.GET("/signup", func(c *gin.Context) {
@@ -75,5 +79,9 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 
 	r.POST("/decrease_stock/:id/:amount", func(c *gin.Context) {
 		controllers.DecreaseStock(c, db)
+	})
+
+	r.GET("/terms", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "terms.html", nil)
 	})
 }

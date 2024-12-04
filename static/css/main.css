@@ -1,28 +1,23 @@
 /* Общие стили */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     font-family: 'Press Start 2P', sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    margin: 0;
-    padding: 0;
 }
 
 a {
-    color: #4b6cb7;
+    color: #7a9ee4;
     text-decoration: none;
 }
 
 a:hover {
     color: #334d92;
-}
-
-h1, h2, h3 {
-    color: #333;
-    text-align: center;
 }
 
 button {
@@ -38,6 +33,10 @@ button:hover {
     opacity: 0.9;
 }
 
+h1, h2, h3 {
+    color: #333;
+    text-align: center;
+}
 
 /* Верхняя панель (upperbox) */
 .upperbox {
@@ -64,21 +63,37 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Карточки товаров */
+/* Нижняя панель (footer) */
+.lowerbox {
+    background: #4b6cb7;
+    text-align: center;
+    padding: 20px 0;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.lowerbox p {
+    font-size: 14px;
+    color: #ddd;
+}
+
+.lowerbox p:hover {
+    color: #ffffff;
+}
+
+/* Карточки товаров (на главной странице) */
 .prod {
     display: flex;
-    flex-wrap: wrap; /* Разрешаем перенос строк */
-    justify-content: center; /* Равномерное распределение */
-    gap: 20px; /* Пространство между карточками */
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
     padding: 20px;
 }
 
-
 .box {
-    width: calc(33.33% - 20px); /* 3 карточки в ряд, учитывая отступы */
-    max-width: 220px; /* Ограничиваем максимальную ширину */
-    min-width: 200px; /* Минимальная ширина */
-    height: auto; /* Убираем фиксированную высоту */
+    width: calc(33.33% - 20px);
+    max-width: 220px;
+    min-width: 200px;
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -89,7 +104,6 @@ button:hover {
     justify-content: space-between;
     transition: transform 0.3s, box-shadow 0.3s;
 }
-
 
 .box:hover {
     transform: translateY(-5px);
@@ -103,9 +117,9 @@ button:hover {
 }
 
 .box img {
-    width: 100%; /* Растягиваем на ширину контейнера */
-    height: 120px; /* Фиксированная высота для изображения */
-    object-fit: cover; /* Сохраняем пропорции и обрезаем лишнее */
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
     border-radius: 5px;
     margin-bottom: 15px;
 }
@@ -116,20 +130,9 @@ button:hover {
     margin: 5px 0;
 }
 
-.numberinput {
-    width: 80%;
-    padding: 8px;
-    margin: 10px auto;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
 .decrease-btn {
     background-color: #4b6cb7;
     color: #ffffff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
@@ -137,7 +140,7 @@ button:hover {
     background-color: #334d92;
 }
 
-/* Детальная страница товара */
+/* Страница товара (product.html) */
 .product-container {
     max-width: 800px;
     margin: 30px auto;
@@ -175,8 +178,6 @@ button:hover {
     background-color: #4b6cb7;
     color: #ffffff;
     padding: 10px;
-    border: none;
-    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
@@ -184,78 +185,138 @@ button:hover {
     background-color: #334d92;
 }
 
-/* Форма добавления товара */
-.form-container {
+/* Страница корзины (cart.html) */
+.cart-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.cart-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-container table th,
+.cart-container table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.cart-container table th {
+    background-color: #f4f4f4;
+}
+
+.cart-container button {
+    background-color: #d9534f;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.cart-container button:hover {
+    background-color: #c9302c;
+}
+
+/* Страница профиля (profile.html) */
+.profile-container {
     max-width: 600px;
     margin: 40px auto;
     padding: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: #333;
-}
-
-.form-container h1 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #4b6cb7;
 }
 
-.form-group {
+.profile-container h1 {
+    font-size: 24px;
+    color: #4b6cb7;
     margin-bottom: 15px;
 }
 
-.form-group label {
+.profile-container p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.profile-container button {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.btn-success {
+    background-color: #4b6cb7;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.btn-success:hover {
+    background-color: #334d92;
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #c9302c;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.btn-info:hover {
+    background-color: #31b0d5;
+}
+
+/* Форма (регистрация, вход) */
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-container label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
 }
 
-.form-control {
+.form-container input {
     width: 100%;
     padding: 8px;
-    margin: 5px 0;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f4f4f4;
-    color: #333;
 }
 
-.form-control::placeholder {
-    color: #aaa;
-}
-
-button.btn-success {
-    background-color: #4b6cb7;
-    color: #ffffff;
+.form-container button {
     width: 100%;
     padding: 10px;
-    border-radius: 5px;
     font-size: 16px;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s;
+    background-color: #4b6cb7;
+    color: #ffffff;
+    border-radius: 5px;
 }
 
-button.btn-success:hover {
+.form-container button:hover {
     background-color: #334d92;
-}
-
-/* Нижняя панель (lowerbox) */
-.lowerbox {
-    background:#4b6cb7;
-    text-align: center;
-    padding: 20px 0;
-    color: #ffffff;
-    margin-top: 20px;
-}
-
-.lowerbox p {
-    font-size: 14px;
-    color: #ddd;
-}
-
-.lowerbox p:hover {
-    color: #ffffff;
 }
