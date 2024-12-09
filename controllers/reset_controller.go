@@ -44,8 +44,7 @@ func RequestPasswordReset(c *gin.Context, db *gorm.DB) {
 	// Отправляем email
 	resetLink := fmt.Sprintf("http://localhost:8080/password/reset/%s", token)
 	sendEmail(form.Email, "Восстановление пароля", "Пройдите по ссылке для восстановления пароля: "+resetLink)
-
-	c.JSON(http.StatusOK, gin.H{"message": "Ссылка для восстановления отправлена на email"})
+	c.HTML(http.StatusOK, "forgot_password_success.html", nil)
 }
 
 // Генерация случайного токена
@@ -78,6 +77,11 @@ func ResetPassword(c *gin.Context, db *gorm.DB) {
 
 	if err := c.ShouldBind(&form); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Неверные данные"})
+		return
+	}
+
+	if form.NewPassword != form.ConfirmPassword {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "пароли не совпадают"})
 		return
 	}
 

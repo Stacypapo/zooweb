@@ -47,7 +47,10 @@
   <form action="/user/cart/clear" method="post">
     <button class="btn-danger" type="submit">Очистить корзину</button>
   </form>
-  <a href="/checkout"><button class="btn-success">Перейти к оплате</button></a>
+  <form action="/user/order/checkout" method="post">
+    <button type="submit" class="btn-success">Оформить заказ</button>
+  </form>
+
   {{else}}
   <p>Ваша корзина пуста. <a href="/home">Начните покупки</a> прямо сейчас!</p>
   {{end}}

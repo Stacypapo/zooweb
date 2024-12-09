@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Orders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 90%;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+    .order {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .order h3 {
+      margin-top: 0;
+    }
+    .order ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .order ul li {
+      border-bottom: 1px solid #ddd;
+      padding: 5px 0;
+    }
+    .order ul li:last-child {
+      border-bottom: none;
+    }
+    .status {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  {{ if .orders }}
+  {{ range .orders }}
+  <div class="order">
+    <h3>Order ID: {{ .ID }}</h3>
+    <p><strong>Date:</strong> {{ .CreatedAt.Format "2006-01-02 15:04:05" }}</p>
+    <p><strong>Status:</strong> <span class="status">{{ .Status }}</span></p>
+    <ul>
+      {{ range .Items }}
+      <li>
+        <strong>Product ID:</strong> {{ .ProductID }} |
+        <strong>Quantity:</strong> {{ .Quantity }} |
+        <strong>Unit Price:</strong> ${{ printf "%.2f" .UnitPrice }} |
+        <strong>Total:</strong> ${{ printf "%.2f" .TotalPrice }}
+      </li>
+      {{ end }}
+    </ul>
+    <p class="total">Total Amount: ${{ printf "%.2f" .TotalAmount }}</p>
+  </div>
+  {{ end }}
+  {{ else }}
+  <p>No orders found.</p>
+  {{ end }}
+</div>
+</body>
+</html>

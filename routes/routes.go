@@ -29,6 +29,21 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 			controllers.RemoveFromCart(c, db)
 		})
 
+		authGroup.GET("/orders", func(c *gin.Context) {
+			controllers.ViewOrders(c, db)
+		})
+
+		authGroup.POST("/order/checkout", func(c *gin.Context) {
+			controllers.CheckoutHandler(c, db)
+		})
+
+		authGroup.GET("/order/success", func(c *gin.Context) {
+			controllers.OrderSuccessHandler(c, db)
+		})
+
+		authGroup.GET("/order/cancel", func(c *gin.Context) {
+			controllers.OrderCancelHandler(c)
+		})
 	}
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/static", "./static")
@@ -64,7 +79,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	r.POST("/logout", func(c *gin.Context) {
 		controllers.Logout(c)
 	})
-	
+
 	r.GET("/password/forgot", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "forgot_password.html", nil)
 	})
