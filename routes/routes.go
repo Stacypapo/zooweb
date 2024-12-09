@@ -64,6 +64,22 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 	r.POST("/logout", func(c *gin.Context) {
 		controllers.Logout(c)
 	})
+	
+	r.GET("/password/forgot", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "forgot_password.html", nil)
+	})
+
+	r.POST("/password/forgot", func(c *gin.Context) {
+		controllers.RequestPasswordReset(c, db)
+	})
+
+	r.GET("/password/reset/:token", func(c *gin.Context) {
+		c.HTML(http.StatusOK, "reset_password.html", gin.H{"token": c.Param("token")})
+	})
+
+	r.POST("/password/reset", func(c *gin.Context) {
+		controllers.ResetPassword(c, db)
+	})
 
 	r.GET("/product/:slug", func(c *gin.Context) {
 		controllers.GetProduct(c, db)

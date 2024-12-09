@@ -24,7 +24,7 @@ func main() {
 	models.AutoMigrateProducts(db)
 	models.AutoMigrateUsers(db)
 	models.AutoMigrateCart(db)
-
+	models.AutoMigrateResetToken(db)
 	// Инициализация Gin
 	r := gin.Default()
 	r.Static("/uploads", "./uploads")

@@ -39,7 +39,6 @@ func JWTAuthMiddleware(secretKey string) gin.HandlerFunc {
 		// Извлекаем данные пользователя из токена и сохраняем в контексте
 		if claims, ok := token.Claims.(jwt.MapClaims); ok {
 			c.Set("userID", claims["id"])
-			c.Set("username", claims["username"])
 		}
 
 		// Продолжаем обработку запроса

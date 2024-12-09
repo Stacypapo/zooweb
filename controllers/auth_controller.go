@@ -16,42 +16,34 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func Signup(c *gin.Context) {
-	c.HTML(http.StatusOK, "signup.html", nil)
-}
-
-func Signin(c *gin.Context) {
-	c.HTML(http.StatusOK, "signin.html", nil)
-}
-
 // Регистрация нового пользователя
 func Register(c *gin.Context, db *gorm.DB) {
 	var form struct {
 		Username string `form:"username" binding:"required"`
 		Password string `form:"password" binding:"required"`
+		Email    string `form:"email"    binding:"required"`
 	}
-	
+
 	if c.PostForm("agree") != "on" {
 		c.HTML(http.StatusBadRequest, "signup.html", gin.H{"error": "Вы должны принять пользовательское соглашение"})
 		return
 	}
 
-	// Парсинг данных из формы
 	if err := c.ShouldBind(&form); err != nil {
 		c.HTML(http.StatusBadRequest, "signup.html", gin.H{"error": "Все поля обязательны для заполнения"})
 		return
 	}
 
-	// Создаем пользователя
 	user := models.User{
 		Username: form.Username,
+		Email:    form.Email,
 	}
+
 	if err := user.HashPassword(form.Password); err != nil {
 		c.HTML(http.StatusInternalServerError, "signup.html", gin.H{"error": "Ошибка хеширования пароля"})
 		return
 	}
 
-	// Сохраняем в базе данных
 	if err := db.Create(&user).Error; err != nil {
 		c.HTML(http.StatusInternalServerError, "signup.html", gin.H{"error": "Пользователь уже существует"})
 		return
@@ -75,19 +67,19 @@ func Login(c *gin.Context, db *gorm.DB) {
 
 	// Проверяем наличие пользователя в базе
 	var user models.User
-	if err := db.Where("username = ?", form.Username).First(&user).Error; err != nil {
-		c.HTML(http.StatusUnauthorized, "signin.html", gin.H{"error": "Неверное имя пользователя или пароль"})
+	if err := db.Where("username = ? OR email = ?", form.Username, form.Username).First(&user).Error; err != nil {
+		c.HTML(http.StatusUnauthorized, "signin.html", gin.H{"error": "Неверный логин или почта"})
 		return
 	}
 
 	// Проверяем пароль
 	if err := user.CheckPassword(form.Password); err != nil {
-		c.HTML(http.StatusUnauthorized, "signin.html", gin.H{"error": "Неверное имя пользователя или пароль"})
+		c.HTML(http.StatusUnauthorized, "signin.html", gin.H{"error": "Неверный пароль"})
 		return
 	}
 
 	// Генерируем JWT-токен
-	token, err := GenerateJWT(user.ID, user.Username)
+	token, err := GenerateJWT(user.ID)
 	println(token)
 
 	if err != nil {
@@ -108,11 +100,10 @@ func Login(c *gin.Context, db *gorm.DB) {
 	//c.HTML(http.StatusOK, "signin.html", gin.H{"success": "Вход выполнен успешно!", "token": token})
 }
 
-func GenerateJWT(userID uint, userUsername string) (string, error) {
+func GenerateJWT(userID uint) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":       userID,
-		"username": userUsername,
-		"exp":      time.Now().Add(24 * time.Hour).Unix(),
+		"id":  userID,
+		"exp": time.Now().Add(24 * time.Hour).Unix(),
 	})
 	return token.SignedString(jwtKey)
 }
@@ -120,6 +111,5 @@ func GenerateJWT(userID uint, userUsername string) (string, error) {
 func Logout(c *gin.Context) {
 	// Удаляем cookie
 	c.SetCookie("token", "", -1, "/", "", false, true)
-
 	c.Redirect(301, "/home")
 }
